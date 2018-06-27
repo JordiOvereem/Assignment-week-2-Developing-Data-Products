@@ -1,0 +1,35 @@
+---
+title: "Leaflet example JOOV2"
+author: "Jordi Overeem"
+date: "27 juni 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Libraries
+Loading libraries:
+```{r}
+library(leaflet)
+library(dplyr)
+library(maps)
+library(htmltools)
+```
+## Get data
+Data about the locations of cities around the world is collected.
+Next, the data is subsetted to cities with a population larger than 1 million.
+```{r}
+data <- as.data.frame(world.cities)
+colnames(data)<- c("Name", "Country", "Population", "Latitude", "Longitude")
+data <- data[data$Population>1000000,] # Subset data with cities with population > 1M
+```
+
+## Create map
+Create map:
+
+```{r}
+map <- leaflet(data = data, width = "100%" ) %>%
+  addTiles(options=providerTileOptions(noWrap = TRUE)) %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng = ~Longitude, lat = ~Latitude, popup = htmlEscape(~Name))
+```
