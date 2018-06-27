@@ -32,4 +32,5 @@ Create map:
 map <- leaflet(data = data, width = "100%" ) %>%
   addTiles(options=providerTileOptions(noWrap = TRUE)) %>%  # Add default OpenStreetMap map tiles
   addMarkers(lng = ~Longitude, lat = ~Latitude, popup = htmlEscape(~Name))
+map # show map
 ```
